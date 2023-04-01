@@ -26,7 +26,6 @@
 </head>
 <body>
 <button class="infoButton", id="infoButton"><i class="fa fa-info-circle"></i></button>
-<button class="ShareButton", id="ShareButton"  onclick="ShareLink()">share</button>
 	<!-- The Modal -->
 <div id="myModal" class="modal">
   <!-- Modal content -->
@@ -63,7 +62,7 @@ I recommend that you do all customization before strating the timer eventhough t
 
 <div align="center" class="divStopwatch">
 	<button class="buttonMaster" id="bM" value="Start" onclick="masterStartStop()">Start</button>
-	<span id="MasterTime" style="display:inline-block; width:150px; font-size:32px;">0:00</span>
+	<span id="MasterTime" style="display:inline-block; width:150px; font-size:32px;">00:00:00</span>
 	<button class="buttonMaster" onclick="ticker.clear();" style="background-color: #ff495c;">Reset</button>
 </div>
 <hr>
@@ -89,9 +88,7 @@ I recommend that you do all customization before strating the timer eventhough t
 
 <script src="timerLOBS.js"></script>
 <script src="timeline.js"></script>
-<script src="share.js"></script>
 <script>
-	getBtnNamesFromUrl();
 	createButtons();
 </script>
 

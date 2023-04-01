@@ -2,6 +2,7 @@
 
 var timelineColors = ["#15bef0", "#e5053a", "#fcd116", "#5bbf21", "#3a75c4", "#e63375", "#eda075", "#00b08c", "#9258c8", "#8c0032", "#fca311", "#009e60"];	
 
+var min_total = 50;
 
 function clearTimeline(){
 	if( document.getElementById("canvas") == null){return;}
@@ -24,24 +25,23 @@ function sec2time(tmp){
 
 
 function createTimeline() {
+	if(!confirm('Create new timeline?')) return;
 	if(masterRunning){
-		if(!confirm('Are you sure? Stop timer and create timeline.')) return;
-			ticker.stop();
-			document.getElementById("bM").style.background =  "#009bff";
-			document.getElementById("bM").innerHTML = "Start";
-			masterRunning = false;
-			stopAll();
-		}
-	else if( document.getElementById("canvas") != null){if(!confirm('Create new timeline?')) return;}
+		ticker.stop();
+		document.getElementById("bM").style.background =  "#009bff";
+		document.getElementById("bM").innerHTML = "Start";
+		masterRunning = false;
+		stopAll();
+	}
 		
 	clearTimeline(); // this is not working!!!
 		
 	var numOfButtons = document.getElementById("divButtons").childElementCount; // get the number of buttons
 	
-	var labels = [];
-	for(var ii=0;ii<numOfButtons;ii++){
-	labels.push(document.getElementById("b" + ii).textContent);
-	}
+	//var labels = [];
+	//for(var ii=0;ii<numOfButtons;ii++){
+	//	labels.push(document.getElementById("b" + ii).textContent);
+	//}
 	
 	var canvas = document.createElement("canvas");
 	var ctx = canvas.getContext("2d");
@@ -59,10 +59,8 @@ function createTimeline() {
 	}
 	
 	
-	var plotWidth; // this from lenght of time
-	if(ticks<45*60){plotWidth = 450}
-	else if(ticks<75*60){plotWidth = 750}
-	else{plotWidth = 900}
+	var plotWidth = min_total*10; // this from lenght of time
+	if(ticks >= min_total*60) {plotWidth *= 2}
 	var canvasWidth = plotWidth + textLength + 100;	// add room for totals and then some
 	canvas.width = canvasWidth;
 	
@@ -99,7 +97,7 @@ ctx.lineTo(plotStart, topMargin);
 ctx.stroke();
 
 // Y-ticks and labels
-var labels = [];
+//var labels = [];
 for(var ii=0;ii<numOfButtons;ii++){
 	var txt = document.getElementById("b" + ii).textContent;
 	ctx.fillText(txt, plotStart-(ctx.measureText(txt).width+5), pos[ii]+height/2+2.5);
@@ -114,8 +112,8 @@ for(var ii=0;ii<numOfButtons;ii++){
 
 // X-ticks and labels
 for(var ii=0;ii<=plotWidth/10;ii++){
-    ctx.beginPath(); //?
-    ctx.lineWidth = 1;
+  ctx.beginPath(); //?
+  ctx.lineWidth = 1;
     // Draw a tick mark 6px long (-3 to 3)
 	ctx.setLineDash([]);
 	ctx.strokeStyle = "#000000";
@@ -123,22 +121,23 @@ for(var ii=0;ii<=plotWidth/10;ii++){
 	ctx.lineTo(plotStart+10*ii, plotHeight + topMargin+5);
 	ctx.stroke();
     // Draw gridlines
-    if (ii>0 && ii%5==0) {
+  if (ii%5==0) {
 		ctx.beginPath();
 		ctx.strokeStyle = "#8c8c8c";
 		ctx.moveTo(plotStart+10*ii, plotHeight + topMargin -1);
 		ctx.lineTo(plotStart+10*ii, topMargin);
 		ctx.stroke();
-		ctx.fillText(ii, plotStart+10*ii-5, plotHeight + topMargin +15);
-		}
-	 else if (ii>0) {
+		clk_time = start_time + ii*60;
+		time_str = time_to_str((start_time[0]+ Math.ceil(ii/60))%24, (start_time[1]+ii)%60, -1);
+		ctx.fillText(time_str, plotStart+10*ii-5, plotHeight + topMargin +15);
+	} else if (ii>0) {
 		ctx.beginPath();
 		ctx.setLineDash([2, 2]);
 		ctx.strokeStyle = "#cccccc";
 		ctx.moveTo(plotStart+10*ii, plotHeight + topMargin -1);
 		ctx.lineTo(plotStart+10*ii, topMargin);
 		ctx.stroke();
-		}
+	}
 }
 	
 	// Clear canvas!

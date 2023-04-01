@@ -1,17 +1,19 @@
-	// initialize data-array
-	var data;
-	function clearData(){
-		data = [];
-		var startSTR = 'start';
-		var stopSTR = 'stop';
-		var numOfButtons = document.getElementById("divButtons").childElementCount;
-		
-		for(ii=0; ii<numOfButtons; ii++){
-			data.push(['start' + parseInt(ii)]);
-			data.push(['stop' + parseInt(ii)]);
-		} 
-	}
-	clearData();	
+// initialize data-array
+var data;
+var start_time = [];
+
+function clearData(){
+	data = [];
+	var startSTR = 'start';
+	var stopSTR = 'stop';
+	var numOfButtons = document.getElementById("divButtons").childElementCount;
+	
+	for(ii=0; ii<numOfButtons; ii++){
+		data.push(['start' + parseInt(ii)]);
+		data.push(['stop' + parseInt(ii)]);
+	} 
+}
+clearData();	
 //console.log(data);		
  
 var tmp;
@@ -105,7 +107,7 @@ function AdjustingInterval(workFunc, interval, errorFunc) {
     }
 
     this.stop = function() {
-        clearTimeout(timeout);
+        //clearTimeout(timeout);
         stopAll();
     }
     
@@ -117,7 +119,7 @@ function AdjustingInterval(workFunc, interval, errorFunc) {
 			masterRunning = false;
 			stopAll();
   	  ticks = 0;
-  	  document.getElementById("MasterTime").innerHTML = "0:00";
+  	  document.getElementById("MasterTime").innerHTML = "00:00:00";
   	  clearData();
 			clearTimeline();
     }
@@ -134,13 +136,22 @@ function AdjustingInterval(workFunc, interval, errorFunc) {
     }
 }
 
+var time_to_str = function(hour, min, sec) {
+	var hour_str = (hour >= 10) ? hour : '0' + hour;
+	var minute_str = (min >= 10) ? min : '0' + min;
+
+	if (sec == -1)
+		return hour_str + ':' + minute_str; 
+
+	var second_str = (sec >= 10) ? sec : '0' + sec;
+	return hour_str + ':' + minute_str + ':' + second_str; 
+}
+
 // Define the work to be done
 var doWork = function() {
   console.log(++ticks); // time goes up
-  var minutes = Math.floor(ticks/60);
-  var seconds = ticks - (60*minutes);
-  if (seconds.toString().length < 2){seconds = '0' + seconds.toString()}
-  document.getElementById("MasterTime").innerHTML = minutes + ':' + seconds;
+	var today = new Date();
+	document.getElementById("MasterTime").innerHTML = time_to_str(today.getHours(), today.getMinutes(), today.getSeconds());
 };
 
 // Define what to do if something goes wrong
@@ -153,8 +164,14 @@ var ticker = new AdjustingInterval(doWork, 1000, doError);
 
 // MY functions
 function masterStartStop() {
- var elem = document.getElementById("bM");
-  if (masterRunning == false){
+	if (start_time == 0) {
+		var today = new Date();
+		start_time.push(today.getHours());
+		start_time.push(today.getMinutes());
+		start_time.push(today.getSeconds());  
+	}
+ 	var elem = document.getElementById("bM");
+  if (elem.innerHTML == "Start"){
     ticker.start();
     elem.style.background =  "#3ddc97";
     elem.innerHTML = "Pause";
@@ -163,7 +180,7 @@ function masterStartStop() {
     ticker.stop();
     elem.style.background =  "#009bff";
 		elem.innerHTML = "Start";
-		masterRunning = false;
+		//masterRunning = false;
   }
 }
 
@@ -195,6 +212,11 @@ timeStamp = function(input) {
 		}		
 		data[found].push(ticks);
 		document.getElementById("b" + input).style.background =  "#3ddc97";
+ 		var elem = document.getElementById("bM");
+  	if (elem.innerHTML == "Start"){
+			masterStartStop();
+		}
+
 		running[idx] = true;
 		}
 	else {
@@ -327,22 +349,22 @@ function clearButtonDiv(){
 function createButtons(){
 	clearButtonDiv() // clear current buttons before creating new buttons
 	
-if (typeof(Storage) !== "undefined") {
-	if(localStorage.buttonNames){
-		var storedNames = JSON.parse(localStorage.buttonNames);
-		for(var ii=0; ii<storedNames.length; ii++){
-			addButton(storedNames[ii]);
-			running.push(false);
-		} 
-	}else {
-		for(var ii=0;ii<6;ii++){
-			addButton(ii);
-			running.push(false);
+	if (typeof(Storage) !== "undefined") {
+		if(localStorage.buttonNames){
+			var storedNames = JSON.parse(localStorage.buttonNames);
+			for(var ii=0; ii<storedNames.length; ii++){
+				addButton(storedNames[ii]);
+				running.push(false);
+			} 
+		}else {
+			for(var ii=0;ii<6;ii++){
+				addButton(ii);
+				running.push(false);
+			}
 		}
-	}
 	
-} else {
-console.log("Sorry, your browser does not support web storage...");
+	} else {
+		console.log("Sorry, your browser does not support web storage...");
 	}
 }
 
