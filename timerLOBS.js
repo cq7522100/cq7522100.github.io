@@ -35,11 +35,11 @@ function addButton(name) {
 			btn.innerHTML = numOfButtons;
 			document.getElementById("divButtons").appendChild(btn);
 			saveButtons()
-			}
+		}
 		else {
 			btn.innerHTML = name;
 			document.getElementById("divButtons").appendChild(btn);
-			}
+		}
 		
 		data.push(['start' + parseInt(numOfButtons)]);
 		data.push(['stop' + parseInt(numOfButtons)]);
@@ -75,6 +75,9 @@ function renameButtons() {
 		var tmpButton = document.getElementById(tmpId);
 		var txt = prompt("Please enter text for button", tmpButton.innerHTML);
 		//if (txt.length > 30) {txt = txt.substring(0,29) + "...";} // Ei hyvä tapa, ei skaalaudu
+		if(txt == null){ 
+			break;
+		}
 		tmpButton.innerHTML = txt;
 	}
 	saveButtons();
@@ -107,42 +110,42 @@ function AdjustingInterval(workFunc, interval, errorFunc) {
     }
     
     this.clear = function() {
-		if(!confirm('Are you sure? Clear data and reset timer.')) return;
-		ticker.stop();
-		document.getElementById("bM").style.background =  "#009bff";
-		document.getElementById("bM").innerHTML = "Start";
-		masterRunning = false;
-		stopAll();
-        ticks = 0;
-        document.getElementById("MasterTime").innerHTML = "0:00";
-        clearData();
-		clearTimeline();
+			if(!confirm('Are you sure? Clear data and reset timer.')) return;
+			ticker.stop();
+			document.getElementById("bM").style.background =  "#009bff";
+			document.getElementById("bM").innerHTML = "Start";
+			masterRunning = false;
+			stopAll();
+  	  ticks = 0;
+  	  document.getElementById("MasterTime").innerHTML = "0:00";
+  	  clearData();
+			clearTimeline();
     }
 
     function step() {
-        var drift = Date.now() - expected;
-        if (drift > that.interval) {
-            // You could have some default stuff here too...
-            if (errorFunc) errorFunc();
-        }
-        workFunc();
-        expected += that.interval;
-        timeout = setTimeout(step, Math.max(0, that.interval-drift));
+      var drift = Date.now() - expected;
+      if (drift > that.interval) {
+          // You could have some default stuff here too...
+          if (errorFunc) errorFunc();
+      }
+      workFunc();
+      expected += that.interval;
+      timeout = setTimeout(step, Math.max(0, that.interval-drift));
     }
 }
 
 // Define the work to be done
 var doWork = function() {
-    console.log(++ticks); // time goes up
-    var minutes = Math.floor(ticks/60);
-    var seconds = ticks - (60*minutes);
-    if (seconds.toString().length < 2){seconds = '0' + seconds.toString()}
-    document.getElementById("MasterTime").innerHTML = minutes + ':' + seconds;
+  console.log(++ticks); // time goes up
+  var minutes = Math.floor(ticks/60);
+  var seconds = ticks - (60*minutes);
+  if (seconds.toString().length < 2){seconds = '0' + seconds.toString()}
+  document.getElementById("MasterTime").innerHTML = minutes + ':' + seconds;
 };
 
 // Define what to do if something goes wrong
 var doError = function() {
-    console.warn('The drift exceeded the interval.');
+  console.warn('The drift exceeded the interval.');
 };
 
 // (The third argument is optional)
@@ -155,12 +158,12 @@ function masterStartStop() {
     ticker.start();
     elem.style.background =  "#3ddc97";
     elem.innerHTML = "Pause";
-	masterRunning = true;
+		masterRunning = true;
   } else {
     ticker.stop();
     elem.style.background =  "#009bff";
-	elem.innerHTML = "Start";
-	masterRunning = false;
+		elem.innerHTML = "Start";
+		masterRunning = false;
   }
 }
 
@@ -220,7 +223,7 @@ function transpose(inputArray) {
 		console.log(diff);
 		if(diff>0){
 			for(jj=0; jj<diff; jj++){inputArray[ii].push(null)}
-			}
+		}
 	}
 	// return transposed array
 	return inputArray[0].map((col, c) => inputArray.map((row, r) => inputArray[r][c]));
