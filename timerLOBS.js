@@ -122,6 +122,10 @@ function AdjustingInterval(workFunc, interval, errorFunc) {
   	  document.getElementById("MasterTime").innerHTML = "00:00:00";
   	  clearData();
 			clearTimeline();
+			var today = new Date();
+			start_time[0] = today.getHours();
+			start_time[1] = today.getMinutes();
+			start_time[2] = today.getSeconds();  
     }
 
     function step() {

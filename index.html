@@ -35,27 +35,32 @@
       <h2>Classroom Timer</h2>
     </div>
     <div class="modal-body">
-      <p><strong>Pleas note,</strong> this tool is still in developement. As such, it might contain some oddities or bugs. If you find any, plese report them to me. You may use this as you wish but I hope you don't share it at the moment.
-</p>
+      <p> 版本：U.0 </p>
+      <p>簡介：本程式基於赫爾辛基大學的Miikka Turkkila研究員所開發的開源程式轉製而成。「通用時間線標記數位觀課工具」是以時間線標記為紀錄方式的數位工具。</p>
 <p>
-This is a simple timer tool for observing classroom activities. It can be used with other data collection e.g. video data; start timer with the recording and you can do raw video coding in real time.
-Use of this tool should be intuitive, but here's a small quide.
-<ul>
-<li>Start/Stop button starts or stops the timer.</li>
-<li>Numbered buttons are toggleable as in you may activate and deactivate them. Doing so saves the current time as start or stop time for that event.</li>
-<li>+ and - buttons adds and deletes buttons respectively, note that deleting button also deletes saved data for that button.</li>
-<li>rename button allows you to give own names for each button. Names are stored locally and therefore should remain even if the window is closed. If you want reset local storage, <a onclick="delLocal()" href="javascript:void(0);"> click here!</a></li>
-	<ul><li>You may also save the html-file. "File -> Save Page As..." if you wish</li></ul>
-<li>Create timeline draws simple timeline into a HTML5-canvas from the saved data. At least in firefox it is possible to view the canvas as image by rigth clicking and then save it.</li>
-<li>Is is possible to also download the saved data as csv-file. Note that first row of the file is always "start0, stop0, start1..." and is not affected by renaming the buttons.</li>
-<li>Clear button resets the timer, clears the timeline and deletes all data. However, it does not affect the activation buttons.</li>
-</ul>
+時間線標記：依據於課堂中所看到或聽到的事實依觀察焦點進行分類，並依據課堂時間進行輸入標記，產生課堂事實紀錄。
 <br>
-I recommend that you do all customization before strating the timer eventhough timer should work dynamically.
+通用：標記按鈕可依教師需求自行分類與定義。
+</p>
+
+使用說明：
+<ul>
+<li>第一次按下Start按鈕可啟動計時器，並將此時間作為紀錄起點。</li>
+<li>Pause按鈕為停止全部編號按鈕。請注意，紀錄起點時間不變。</li>
+<li>Reset按鈕可清除目前資料，並將時間起點改為當前時間</li>
+<li>編號按鈕可切換狀態，您可以按下啟用或再次按下以停用。這樣做可將當前時間保存為該事件的開始或停止時間。</li>
+<li>＋和－按鈕分別添加和刪除按鈕，請注意，刪除按鈕也會刪除該按鈕的已保存數據。按鈕數量上下限為2至12個。</li>
+<li>Rename按鈕可依序為每個按鈕命名。</li>
+<li>本程式可從紀錄的數據中繪製簡單的HTML5時間線橫條圖，您可以透過右鍵選單另存。</li>
+<li>本程式亦下載紀錄的數據csv文件。請注意，文件的第一行始終是“start0，stop0，start1...”，並且不會受到按鈕重新命名的影響。</li>
+<li>清除按鈕重置計時器，清除時間線並刪除所有數據。但是，它不會影響編號按鈕的名稱。</li>
 </p>
     </div>
     <div class="modal-footer">
-      <h4><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a> Miikka Turkkila</h4>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>
+      <!-- <h4><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a> Miikka Turkkila</h4>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a> -->
+      <h4><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh_TW"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a></h4>「通用時間線標記數位觀課工具」(U.0)由國立臺灣師範大學製作，以創用CC姓名標示-非商業性-相同方式分享4.0國際授權條款釋出。國立臺灣師範大學(2023)。通用時間線標記數位觀課工具(U.0)。112年中小學教師專業發展人才培訓輔導計畫。
+        National Taiwan Normal University(2023). Universal timeline coding digital observation tool(U.0). The training and counseling plan for primary and secondary school teachers professional development at 2023.
+        <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh_TW">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>
     </div>
   </div>
 </div>

@@ -185,8 +185,10 @@ function saveTimeline(){
 	}
 	
     var link = document.createElement("a");
-    link.setAttribute('download', document.getElementById("filename").value);
-    link.href = canvas.toDataURL("image/png");
+		link.setAttribute('download', document.getElementById("filename").value);
+    //link.href = canvas.toDataURL("image/png");
+    link.href = canvas.toDataURL("/storage/emulated/0/Download/image.png");
+
     document.body.appendChild(link);
     link.click();
     link.remove();
